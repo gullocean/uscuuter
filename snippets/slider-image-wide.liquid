@@ -1,0 +1,11 @@
+{% unless slide_images == blank %}
+  <div class="slider-image-wide flexslider">
+    <ul class="slides">
+      {% for slide_image in slide_images %}
+        <li class="slide">
+          <img src="{{ slide_image | asset_url }}">
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endunless %}

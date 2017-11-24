@@ -1,0 +1,212 @@
+<section class="section-store-features">
+  <div class="wrapper wrapper--margins">
+    {% for i in (1..3) %}
+      {% capture store_feature_icon %}store_feature_{{i}}_icon{% endcapture %}
+      {% capture store_feature_title %}store_feature_{{i}}_title{% endcapture %}
+      {% capture store_feature_subtext %}store_feature_{{i}}_subtext{% endcapture %}
+      {% capture store_feature_url %}store_feature_{{i}}_url{% endcapture %}
+      {% if settings[store_feature_url] != blank %}
+        <a href="{{ settings[store_feature_url] }}" class="grid__item one-third medium-down--one-whole {% if forloop.first %}grid__item--first{% elsif forloop.last %}grid__item--last{% endif %}">
+          {% include 'asset_svg' with settings[store_feature_icon] %}
+          <h3>{{ settings[store_feature_title] }}</h3>
+          <p>{{ settings[store_feature_subtext] }}</p>
+        </a>
+      {% else %}
+        <div class="grid__item one-third medium-down--one-whole {% if forloop.first %}grid__item--first{% elsif forloop.last %}grid__item--last{% endif %}">
+          {% include 'asset_svg' with settings[store_feature_icon] %}
+          <h3>{{ settings[store_feature_title] }}</h3>
+          <p>{{ settings[store_feature_subtext] }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<footer class="site-footer small--text-center" role="contentinfo">
+{% comment %}
+  <div class="loop-wrapper">
+    <h2>FREE SHIPPING</h2>
+    <h3>No Minimum • No Code • 24/7</h3>
+    <div class="mountain"></div>
+    <div class="hill"></div>
+    <div class="tree"></div>
+    <div class="tree"></div>
+    <div class="tree"></div>
+    <div class="rock"></div>
+    <div class="truck"></div>
+    <div class="wheels"></div>
+  </div>
+{% endcomment %}
+
+  <div class="h1 site-header__logo" itemscope itemtype="http://schema.org/Organization">
+    {% if settings.footer_logo_use_image %}
+      <a href="/" itemprop="url" class="site-header__logo-link">
+        <img src="{{ 'footer_logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+      </a>
+    {% else %}
+      <a href="/" itemprop="url" class="site-header__logo-text">{{ shop.name }}</a>
+    {% endif %}
+  </div>
+
+  <div class="wrapper">
+    <div class="footer__content grid grid--margins">
+      <div class="grid__item one-whole large--one-third">
+        <h3>Support</h3>
+        <ul>
+          {% for link in linklists.footer.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="grid__item one-whole large--one-third">
+        <h3>Information</h3>
+        <ul>
+          {% for link in linklists.footer-2.links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="grid__item one-whole large--one-third">
+        <h3>Newsletter</h3>
+        {% if settings.newsletter_form_action != blank %}
+          {% comment %}
+
+            MailChimp is the go-to newsletter service for Shopify.
+            Use the link below to find your MailChimp "form action"
+            and insert it in your site settings.
+
+            If the form action URL is not set in the theme settings,
+            it will fallback to a customer form so you can still capture the email.
+
+            MailChimp newsletter integration and requirement:
+             - http://docs.shopify.com/support/configuration/store-customization/where-do-i-get-my-mailchimp-form-action
+
+          {% endcomment %}
+          <div id="mc-embedded-subscribe-msg" style="display:none;"></div>
+            <form action="{{ settings.newsletter_form_action }}" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" target="_blank" class="form-vertical">
+              <label for="NewsletterEmail" class="site-footer__newsletter-label">{{ 'general.newsletter_form.newsletter_label' | t }}</label>
+              <div class="input-group">
+                <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_placeholder' | t }}" name="EMAIL" id="NewsletterEmail" class="input-group__field site-footer__newsletter-input" autocorrect="off" autocapitalize="off" required>
+                <div class="input-group__btn">
+                  <button type="submit" class="btn btn--narrow" name="subscribe" id="Subscribe">{% include 'asset_svg' with 'arrow_right' %}</button>
+                </div>
+              </div>
+            </form>
+            <script>
+              $(function(){
+                var $mcForm = $('#mc-embedded-subscribe-form');
+                var $mcMsg = $('#mc-embedded-subscribe-msg');
+                $mcForm.on('submit', function (event) {
+                  event.preventDefault();
+                  $.ajax({
+                    type: 'GET',
+                    url: $mcForm.attr('action').replace('/post?', '/post-json?')+'&c=?',
+                    data: $mcForm.serialize(),
+                    cache: false,
+                    dataType: 'json',
+                    contentType: 'application/json; charset=utf-8',
+                    error: function(err) {
+                      alert('Could not connect to the registration server. Please try again later.');
+                    },
+                    success: function(response) {
+                      $mcMsg.html(response.msg).find('a').attr('target', '_blank');
+                      if (response.result === 'success') {
+                        $mcMsg.addClass('form-success');
+                      } else {
+                        $mcMsg.addClass('errors');
+                      }
+                      $mcForm.slideUp('fast');
+                      $mcMsg.slideDown('fast');
+                    }
+                  });
+                });
+              });
+            </script>
+        {% endif %}
+        {% if settings.footer_social_enable %}
+          <ul class="inline-list social-icons">
+            {% include 'footer_social-icons' %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+
+    <hr>
+
+    <div class="copy text-center">
+      <p class="text">{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} <a href="/">{{ shop.name }}</a></p>
+    </div>
+
+    {% if settings.footer_payment_enable and shop.enabled_payment_types != empty %}
+      <div class="pay-icons text-center">
+        {% for type in shop.enabled_payment_types %}
+          {% include 'asset_svg' with type %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  
+    <div id="plugdetroit" style="text-align:right;">
+      <a href="http://plugdetroit.com/" target="_blank">
+        <img src="{{ 'powered-by-plug_2x.png' | asset_url }}" alt="Powered by Plug Detroit" style="height:46px;">
+      </a>
+    </div>
+
+  </div>
+</footer>
+
+
+
+
+
+
+{% comment %}
+{% if settings.footer_social_enable %}
+  <aside class="social-footer">
+    <div class="wrapper display-table">
+      <div class="display-table-cell">
+        <ul class="inline-list social-icons">
+          {% include 'footer_social-icons' %}
+        </ul>
+      </div>
+    </div>
+  </aside>
+{% endif %}
+<footer class="site-footer small--text-center" role="contentinfo">
+  <div class="wrapper text-center">
+
+    <div class="h1 site-header__logo" itemscope itemtype="http://schema.org/Organization">
+      {% if settings.footer_logo_use_image %}
+        <a href="/" itemprop="url" class="site-header__logo-link">
+          <img src="{{ 'footer_logo.png' | asset_url }}" alt="{{ shop.name }}" itemprop="logo">
+        </a>
+      {% else %}
+        <a href="/" itemprop="url" class="site-header__logo-text">{{ shop.name }}</a>
+      {% endif %}
+    </div>
+
+    {% if linklists.footer != blank %}
+      <div class="link-list">
+        {% for link in linklists.footer.links %}
+          <a class="footer-link" href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+      </div>
+      <hr>
+    {% endif %}
+
+    <div class="copy">
+      <p class="text">{{ 'layout.footer.copyright' | t }} &copy; {{ 'now' | date: "%Y" }} <a href="/">{{ shop.name }}</a></p>
+    </div>
+
+    {% if settings.footer_payment_enable and shop.enabled_payment_types != empty %}
+      <div class="pay-icons">
+        {% for type in shop.enabled_payment_types %}
+          {% include 'asset_svg' with type %}
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</footer>
+<!-- enjay -->
+{% endcomment %}

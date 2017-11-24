@@ -1,0 +1,157 @@
+<div class="home-video">
+  <video id="bgvid" autoplay muted loop style="">
+    <source src="{{ 'home-video-bg.mp4' | asset_url }}" type="video/mp4">
+    <img src="{{ 'home-video-bg-3.jpg' | asset_img_url: '2048x2048' }}">
+  </video>
+
+  <div class="wrapper wrapper--margins">
+    <div class="home-video__content">
+      <h1 class="home-video__heading"><small>Introducing</small><br>
+        Uber Scuuter Plus</h1>
+      <p class="home-video__text">
+        <a href="{{ all_products[settings.menu_product].url }}" class="home-video__btn-primary btn btn--regular btn--fill btn--color">BUY NOW</a>
+        <a href="{{ settings.home-video-code }}" class="video-overlay home-video__btn-secondary btn btn--regular btn--fill btn--dark">
+          {% include 'asset_svg' with 'play_arrow' %}
+          Watch the Film (1:07)
+        </a>
+      </p>
+    </div>
+
+{% comment %}
+    <div class="content{% unless settings.home-video-code == blank %} push-up {% endunless %}">
+      <div class="display-table">
+        <h2 class="display-table-cell huge-title">
+          {% if settings.home-video-text != blank %}
+            {{ settings.home-video-text }}
+          {% else %}
+            {{ 'homepage.onboarding.welcome' | t }}
+          {% endif %}
+        </h2>
+      </div>
+    </div>
+    {% unless settings.home-video-code == blank %}
+      <a href="{{ settings.home-video-code }}" class="video-overlay"><span class="video-button">{% include 'asset_svg' with 'play_arrow' %}</span></a>
+    {% endunless %}
+{% endcomment %}
+
+  </div>
+
+  <style>
+    video#bgvid {
+      display: none;
+    }
+    .home-video {
+    }
+    .home-video__content {
+    }
+    .home-video__heading {
+      text-shadow: 0 0 15px #000;
+      text-transform: uppercase;
+      font: 100 22px/1 "D3 Euronism";
+      color: #fff;
+    }
+    .home-video__text {
+    }
+    .home-video__btn-primary {
+      margin-bottom: 15px;
+    }
+    .home-video__btn-secondary {
+      margin-bottom: 15px;
+    }
+    .home-video__btn-secondary .play {
+      float: left;
+      position: relative;
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      margin-top: 14px;
+      margin-right: 6px;
+      padding: 3px;
+      border: 2px solid #fff;
+      border-radius: 100%;
+    }
+    @media screen and (max-width: 600px) {
+      .home-video .wrapper {
+        height: 420px;
+      }
+      .prlx-bg {
+        background-image: url("{{ 'home-video-bg-3.jpg' | asset_img_url: '2048x2048' }}");
+      }
+    }
+    @media screen and (min-width: 601px) and (max-width: 1024px) {
+      .home-video__heading {
+        font-size: 54px;
+      }
+      .home-video__heading small {
+        font-size: 38px;
+      }
+      .home-video__btn-secondary {
+        margin-left: 10px;
+      }
+      .home-video__btn-secondary .play {
+        width: 16px;
+        height: 16px;
+        margin-top: 17px;
+      }
+      .prlx-bg {
+        background-image: url("{{ 'home-video-bg-3.jpg' | asset_img_url: '2048x2048' }}");
+        background-position: -120px 50%;
+      }
+    }
+    @media screen and (min-width: 1025px) {
+      .home-video {
+        min-height: 100vh;
+        margin-top: 70px;
+      }
+      .home-video__heading {
+        margin-top: 30px;
+        font-size: 54px;
+      }
+      .home-video__heading small {
+        font-size: 38px;
+      }
+      .home-video__btn-secondary {
+        margin-left: 10px;
+      }
+      .home-video__btn-secondary .play {
+        width: 16px;
+        height: 16px;
+        margin-top: 17px;
+      }
+      .prlx-bg {
+        display: none;
+        background-image: url("{{ 'home-video-bg-3.jpg' | asset_img_url: '2048x2048' }}");
+      }
+      video#bgvid {
+        position: absolute;
+        /*top: 50%;*/
+        /*left: 50%;*/
+        display: block;
+        min-width: 100%;
+        min-height: 100%;
+        width: auto;
+        height: auto;
+        /*z-index: -100;*/
+        /*-ms-transform: translateX(-50%) translateY(-50%);*/
+        /*-moz-transform: translateX(-50%) translateY(-50%);*/
+        /*-webkit-transform: translateX(-50%) translateY(-50%);*/
+        /*transform: translateX(-50%) translateY(-50%);*/
+        /*background: url(polina.jpg) no-repeat;*/
+        /*background-size: cover;*/
+      }
+    }
+    @media (min-width: 768px) {
+      .home-video__text .btn.btn--regular {
+        /*height: 40px;*/
+        /*line-height: 40px;*/
+        /*padding: 0 20px;*/
+      }
+    }
+    @media (min-width: 1400px) {
+      .home-section:first-child .wrapper.wrapper--margins {
+        margin: 0 140px;
+      }
+    }
+  </style>
+  <span class="prlx-bg"></span>
+</div>

@@ -1,0 +1,174 @@
+<!doctype html>
+<html class="no-js">
+<head>
+  <script>(function(H){H.className=H.className.replace(/\bno-js\b/,'js')})(document.documentElement)</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="google-site-verification" content="A7fsYS_Zox4Kbx79nuDM69n2lMfUM3_i75Grd4Um1ZY" />
+  {% if settings.favicon_enable %}
+    <link rel="shortcut icon" href="{{ 'favicon.png' | asset_url }}" type="image/png" />
+  {% endif %}
+
+  <title>
+    {% if template == 'password' %}{{ shop.name }}{% else %}{{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}{% endif %}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {% include 'social-meta-tags' %}
+  <link rel="canonical" href="{{ canonical_url }}">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+
+  {% include 'head_fonts' %}
+  {{ '//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css' | stylesheet_tag }}
+  {{ 'theme.scss.css' | asset_url | stylesheet_tag }}
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+  {{ content_for_header }}
+
+  {% if template contains 'customers' %}
+    {{ 'shopify_common.js' | shopify_asset_url | script_tag }}
+  {% endif %}
+  <script type="text/javascript">
+(function e(){var e=document.createElement("script");e.type="text/javascript",e.async=true,e.src="//staticw2.yotpo.com/z0IK56YL6WswPuqGJxc3XYPvxXQGp9JR4X2SlPm7/widget.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();
+</script>
+  <!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-NXBN4GR');</script>
+<!-- End Google Tag Manager -->
+</head>
+<body id="{{ page_title | handle }}" class="{% if customer %}customer-logged-in {% endif %}template-{{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }}">
+  <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NXBN4GR"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+  {% capture the_snippet_content %}{% include 'socialshopwave-helper' %}{% endcapture %}
+  {% unless the_snippet_content contains 'Liquid error' %}
+    {{ the_snippet_content }}
+  {% endunless %}
+
+  {% assign color = 'is-light' %}
+  {% assign use_logo_inverted = true %}
+
+  {% if template == "index" %}
+    {% if settings.home_section_a == "home-video" %}
+      {% if settings.home_video_bg_text_color == "is-dark" %}
+        {% assign color = "is-dark" %}
+      {% elsif settings.home_video_bg_text_color == "is-light" %}
+        {% assign color = "is-light" %}
+        {% if settings.logo_use_inverted %}
+          {% assign use_logo_inverted = true %}
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+  <div id="PageContainer"{% if color %} class="{{ color }}"{% endif %}>
+    {% include 'header' %}
+
+    <main class="main-content" role="main">
+      {{ content_for_layout }}
+
+      <div class="ssw-html-widget ssw-instagram-widget" data-module="service" data-name="instagramPhotos" data-gallery_id="1" data-type="grid">
+        <div class="ssw-page-loading">
+          <span class="ssw-spin ssw-loader"></span>
+        </div>
+      </div>
+    </main>
+
+    {% include 'footer' %}
+    <!-- enjay -->
+  </div>
+
+  <script type="text/javascript">
+    if ( window.devicePixelRatio > 1 ) {
+      var retinaImages = document.getElementsByClassName('retina-img');
+      for (var i = 0; i <= retinaImages.length; i++ ) {
+        if ( retinaImages[i] != undefined ) {
+          retinaImages[i].setAttribute('src', retinaImages[i].getAttribute('data-retina-src'));
+        }
+      }
+    }
+  </script>
+
+  <script type="text/javascript">
+    {% capture jQuery_plus_icon %} {% include "asset_svg" with "plus" %} {% endcapture %}
+    {% capture jQuery_minus_icon %} {% include "asset_svg" with "minus" %} {% endcapture %}
+    {% capture jQuery_close_icon %} {% include "asset_svg" with "close" %} {% endcapture %}
+    {% capture jQuery_arrow_down_icon %} {% include "asset_svg" with "arrow_down" %} {% endcapture %}
+    {% capture jQuery_arrow_left_icon %} {% include "asset_svg" with "arrow_left" %} {% endcapture %}
+    {% capture jQuery_arrow_right_icon %} {% include "asset_svg" with "arrow_right" %} {% endcapture %}
+
+    jQuery.themeAssets = {
+      plus: '{{ jQuery_plus_icon | lstrip | rstrip }}',
+      minus: '{{ jQuery_minus_icon | lstrip | rstrip }}',
+      close: '{{ jQuery_close_icon | lstrip | rstrip }}',
+      arrow_down: '{{ jQuery_arrow_down_icon | lstrip | rstrip }}',
+      arrow_left: '{{ jQuery_arrow_left_icon | lstrip | rstrip }}',
+      arrow_right: '{{ jQuery_arrow_right_icon | lstrip | rstrip }}'
+    }
+  </script>
+
+  {{ 'theme.js' | asset_url | script_tag }}
+
+  <script>
+    {% if newHash %}
+      $(function() {
+        timber.updateHash('{{ newHash }}');
+      });
+    {% endif %}
+    {% if resetPassword %}
+      $(function() {
+        timber.resetPasswordSuccess();
+      });
+    {% endif %}
+  </script>
+
+  <!-- BEGIN Google Code for Remarketing Tag -->
+  <div style="display:none;">
+    {% comment %}
+      Remarketing tags may not be associated with personally identifiable information
+      or placed on pages related to sensitive categories. See more information and
+      instructions on how to setup the tag on: http://google.com/ads/remarketingsetup
+    {% endcomment %}
+    <script type="text/javascript">/* <![CDATA[ */
+      var google_conversion_id = 931695464;
+      var google_custom_params = window.google_tag_params;
+      var google_remarketing_only = true;
+    /* ]]> */</script>
+    <script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js"></script>
+    <noscript>
+      <div style="display:inline;">
+        <img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/931695464/?value=0&amp;guid=ON&amp;script=0"/>
+      </div>
+    </noscript>
+  </div>
+  <!-- END Google Code for Remarketing Tag -->
+
+  {% comment %}
+    COLOR SWATCH
+  {% endcomment %}
+  <script>
+    jQuery(function() {
+      jQuery('.swatch :radio').change(function() {
+        var optionIndex = jQuery(this).closest('.swatch').attr('data-option-index');
+        var optionValue = jQuery(this).val();
+        jQuery(this)
+          .closest('form')
+          .find('.single-option-selector')
+          .eq(optionIndex)
+          .val(optionValue)
+          .trigger('change');
+      });
+    });
+  </script>
+{% include 'back-in-stock-helper' %}
+</body>
+</html>
