@@ -3631,6 +3631,13 @@ hr.thin-line {
 
 }
 
+.link-view-manual {
+  display: block;
+  padding: 5px 0;
+  @include at-query($max, 1025px) {
+    margin-top: 20px;
+  }
+}
 /*!
  *  3.6. Page
 */
@@ -4545,7 +4552,7 @@ hr.thin-line {
   @extend %clearfix;
 
   .template-product & {
-    margin-top: 30px;
+    margin-top: 20px;
   }
 
   .template-password & {
@@ -4562,15 +4569,12 @@ hr.thin-line {
 
       .template-product & {
         position: relative;
-        top: -6px;
       }
 
     }
 
     a {
-
       display: block;
-      margin-top: -8px;
 
       svg * {
         fill: $colorSecondary;
