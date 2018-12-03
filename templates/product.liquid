@@ -84,8 +84,8 @@
       	          {% endif %}
       	        {% endfor %}
       	      </select>
-
-              {% if product.available and product.variants.size > 1 %}
+            
+              {% if product.available and product.options contains 'Color' %}
                 <div class="form__column">{% include 'swatch' with 'Color' %}</div>
               {% endif %}
 
@@ -242,4 +242,3 @@
     {% endif %}
   });
 </script>
-     

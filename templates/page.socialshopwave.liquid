@@ -47,6 +47,9 @@
               }
             }
             var data = '_sid=' + sswCookie('hesid') + '&hash_key=' + sswCookie('hash_key');
+            if (typeof sswApp !== 'undefined' && typeof sswApp.accounts_enabled !== 'undefined') {
+              data += '&accounts_enabled=' + sswApp.accounts_enabled;
+            }
             if (params) {
               data += '&' + params;
             }
@@ -54,7 +57,7 @@
             if (sswCookie('mail_id')) {
               data += '&resource_id=' + sswCookie('mail_id') + '&resource_type=mail';
             }
-            if (path_name.indexOf('pages/wishlist')) {
+            if (path_name.indexOf('pages/wishlist') !== -1) {
               sswUserChecked(function () {
                 ssw.post(ssw_request_url, data, 'html').done(function(response){
                   ssw('#ssw-page').css('opacity', 0);

@@ -826,6 +826,9 @@ a.parent("object").length||a.parent(".fluid-width-video-wrapper").length)){a.css
     --------------------------------*/
 
     $('select').each(function() {
+      var modifier = $('label[for="'+$(this).attr('id')+'"]').text().toLowerCase();
+      $(this).parents('.selector-wrapper').addClass('selector-wrapper--'+modifier);
+
       $(this).wrap('<div class="jumpstart-selector"></div>');
       $(this).parent().attr('style', $(this).attr('style'));
       $(this).parent().append('<span class="arrow">' + $.themeAssets.arrow_down + '</span>');
@@ -1131,4 +1134,3 @@ a.parent("object").length||a.parent(".fluid-width-video-wrapper").length)){a.css
   });
 
 })(jQuery);
-
